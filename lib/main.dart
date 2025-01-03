@@ -88,7 +88,7 @@ class QuizHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Welcome to the Quizzy App', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Text('Welcome to the Quiz App', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Text('Select a Topic to Begin', style: TextStyle(fontSize: 18)),
             SizedBox(height: 20),
@@ -205,13 +205,18 @@ class _QuizPageState extends State<QuizPage> {
   void _showResult() {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) => AlertDialog(
         title: Text('Quiz Completed!'),
         content: Text('Your score is $score/${quizData[widget.topic]!.length}'),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => QuizHomePage()),
+                (route) => false,
+              );
             },
             child: Text('Restart'),
           ),
